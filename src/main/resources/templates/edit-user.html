@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>Admin page</h1>
+        <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+        <table border="1" cellpadding="1" cellspacing="1" style="width:500px">
+            <caption>
+                <h1>Users</h1>
+            </caption>
+            <thead>
+            <th>Id</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>Roles</th>
+            </thead>
+            <tbody>
+            <tr th:block th:each="user : ${users}">
+                <td th:utext="${user.id}"></td>
+                <td th:utext="${user.login}"></td>
+                <td th:utext="${user.password}"></td>
+                <td th:utext="${user.roles}"></td>
+            </tr>
+
+            </tbody>
+        </table>
+        <br><br>
+        <h2>Edit User:</h2>
+        <form action="#" th:action="@{/admin/add}" th:object="${user}" method="post">
+            <label for="id">Id</label><br>
+            <input id="id" name="id" type="text" th:value="${user.id}" readonly><br><br>
+            <label for="login">Login</label><br>
+            <input id="login" name="login" type="text"><br><br>
+            <label for="password">Password</label><br>
+            <input id="password" name="password" type="text"><br><br>
+            <ul>
+                <li th:each="name : ${ROLES}">
+                    <input type="checkbox" name="rolesValues" th:value="${name}"/>
+                    <label th:text="${name}"></label>
+                </li>
+            </ul>
+            <input type="submit" value="Edit">
+        </form>
+    </div>
+</div>
+</body>
+</html>

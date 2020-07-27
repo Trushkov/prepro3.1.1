@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div class="container">
+
+    <div class="starter-template">
+        <h1>User page</h1>
+        <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+
+    <div align center>
+        <table border="1" cellpadding="1" cellspacing="1" style="width:500px">
+            <caption>
+                <h2 th:utext="${user.login}"></h2>
+            </caption>
+            <thead>
+            <th>Id</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>Roles</th>
+            </thead>
+            <tbody>
+            <tr >
+                <td th:utext="${user.id}"></td>
+                <td th:utext="${user.login}"></td>
+                <td th:utext="${user.password}"></td>
+                <th:block th:each="role : ${user.roles}">
+                    <td th:utext="${role.getName()}"></td>
+                </th:block>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>
