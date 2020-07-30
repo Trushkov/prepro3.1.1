@@ -1,15 +1,13 @@
-package ru.leodev.examples.springboot.springbootwebspringsecurity.service;
+package ru.trushkov.study.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.leodev.examples.springboot.springbootwebspringsecurity.repository.UserRepository;
+import ru.trushkov.study.repository.UserRepository;
 
 
 @Service

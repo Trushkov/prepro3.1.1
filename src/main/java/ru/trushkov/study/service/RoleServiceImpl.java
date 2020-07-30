@@ -1,12 +1,9 @@
-package ru.leodev.examples.springboot.springbootwebspringsecurity.service;
+package ru.trushkov.study.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.leodev.examples.springboot.springbootwebspringsecurity.model.Role;
-import ru.leodev.examples.springboot.springbootwebspringsecurity.repository.RoleRepository;
+import ru.trushkov.study.model.Role;
+import ru.trushkov.study.repository.RoleRepository;
 
 
 import static java.util.Objects.isNull;

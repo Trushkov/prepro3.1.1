@@ -1,4 +1,4 @@
-package ru.leodev.examples.springboot.springbootwebspringsecurity;
+package ru.trushkov.study;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

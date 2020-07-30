@@ -1,17 +1,16 @@
-package ru.leodev.examples.springboot.springbootwebspringsecurity.controller;
+package ru.trushkov.study.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import ru.leodev.examples.springboot.springbootwebspringsecurity.model.Role;
-import ru.leodev.examples.springboot.springbootwebspringsecurity.model.User;
-import ru.leodev.examples.springboot.springbootwebspringsecurity.service.RoleServiceImpl;
-import ru.leodev.examples.springboot.springbootwebspringsecurity.service.UserService;
+import ru.trushkov.study.model.Role;
+import ru.trushkov.study.model.User;
+import ru.trushkov.study.service.RoleServiceImpl;
+import ru.trushkov.study.service.UserService;
 
 import java.util.Arrays;
 import java.util.HashSet;

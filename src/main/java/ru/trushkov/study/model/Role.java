@@ -1,7 +1,6 @@
-package ru.leodev.examples.springboot.springbootwebspringsecurity.model;
+package ru.trushkov.study.model;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Set;

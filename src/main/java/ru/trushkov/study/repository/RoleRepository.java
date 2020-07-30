@@ -1,7 +1,7 @@
-package ru.leodev.examples.springboot.springbootwebspringsecurity.repository;
+package ru.trushkov.study.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.leodev.examples.springboot.springbootwebspringsecurity.model.Role;
+import ru.trushkov.study.model.Role;
 
 
 public interface RoleRepository extends JpaRepository<Role, Long> {

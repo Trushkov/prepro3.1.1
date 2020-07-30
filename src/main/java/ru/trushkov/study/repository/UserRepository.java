@@ -1,7 +1,7 @@
-package ru.leodev.examples.springboot.springbootwebspringsecurity.repository;
+package ru.trushkov.study.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.leodev.examples.springboot.springbootwebspringsecurity.model.User;
+import ru.trushkov.study.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

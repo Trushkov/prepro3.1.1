@@ -1,4 +1,4 @@
-package ru.leodev.examples.springboot.springbootwebspringsecurity.config.handler;
+package ru.trushkov.study.config.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;

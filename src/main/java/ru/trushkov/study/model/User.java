@@ -1,4 +1,4 @@
-package ru.leodev.examples.springboot.springbootwebspringsecurity.model;
+package ru.trushkov.study.model;
 
 
 import javax.persistence.*;

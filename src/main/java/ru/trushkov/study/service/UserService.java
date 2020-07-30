@@ -1,6 +1,6 @@
-package ru.leodev.examples.springboot.springbootwebspringsecurity.service;
+package ru.trushkov.study.service;
 
-import ru.leodev.examples.springboot.springbootwebspringsecurity.model.User;
+import ru.trushkov.study.model.User;
 
 import java.util.List;
 

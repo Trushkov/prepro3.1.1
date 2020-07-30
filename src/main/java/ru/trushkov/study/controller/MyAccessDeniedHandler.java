@@ -1,4 +1,4 @@
-package ru.leodev.examples.springboot.springbootwebspringsecurity.controller;
+package ru.trushkov.study.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
