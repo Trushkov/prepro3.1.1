@@ -19,16 +19,22 @@
         <h2>Users</h2>
     </caption>
     <thead>
-    <th>Id</th>
-    <th>Login</th>
-    <th>Password</th>
-    <th>Roles</th>
+    <tr>
+    <th>ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Age</th>
+    <th>Email</th>
+    <th>Role</th>
+    </tr>
     </thead>
     <tbody>
     <tr th:block th:each="user : ${users}">
         <td th:utext="${user.id}"></td>
+        <td th:utext="${user.firstName}"></td>
+        <td th:utext="${user.lastName}"></td>
+        <td th:utext="${user.age}"></td>
         <td th:utext="${user.login}"></td>
-        <td th:utext="${user.password}"></td>
         <th:block th:each="role : ${user.roles}">
             <td th:utext="${role.getName()}"></td>
         </th:block>
@@ -42,7 +48,13 @@
 <br><br>
 <h2>Save User:</h2>
 <form action="#" th:action="@{/registration/save}" th:object="${user}" method="post">
-    <label for="login">Login</label><br>
+    <label for="firstName">First Name</label><br>
+    <input id="firstName" name="firstName" type="text" th:field="*{firstName}"><br><br>
+    <label for="lastName">Last Name</label><br>
+    <input id="lastName" name="lastName" type="text" th:field="*{lastName}"><br><br>
+    <label for="age">Age</label><br>
+    <input id="age" name="age" type="text" th:field="*{age}"><br><br>
+    <label for="login">Emaile</label><br>
     <input id="login" name="login" type="text" th:field="*{login}"><br><br>
     <label for="password">Password</label><br>
     <input id="password" name="password" type="text" th:field="*{password}"><br><br>

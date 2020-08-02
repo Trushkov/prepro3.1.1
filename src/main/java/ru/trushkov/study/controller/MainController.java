@@ -40,13 +40,30 @@ public class MainController {
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String getUsers(ModelMap model) {
-        model.addAttribute("user", new User());
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        model.addAttribute("user", user);
         model.addAttribute("users", userService.getUsers());
-        model.addAttribute("ROLES", Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
+        model.addAttribute("ROLES", Arrays.asList("USER", "ADMIN"));
         return "/admin";
     }
 
-    @RequestMapping(value = "/admin/add", method = RequestMethod.POST)
+    @GetMapping(value = "/admin/add-new-user")
+    public String addNewUser(Model model){
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        model.addAttribute("user", user);
+        model.addAttribute("users", userService.getUsers());
+        model.addAttribute("ROLES", Arrays.asList("USER", "ADMIN"));
+        return "/add-new-user";
+
+    }
+
+    @RequestMapping(value = "/admin/add", method = {RequestMethod.POST, RequestMethod.GET})
     public String addUser(@ModelAttribute("user") User user, Model model,
                           @RequestParam(value = "rolesValues") String [] roles) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -62,7 +79,7 @@ public class MainController {
         if (user.getId() == 0) {
             userService.addUser(user);
             model.addAttribute("users", userService.getUsers());
-            model.addAttribute("ROLES", Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
+            model.addAttribute("ROLES", Arrays.asList("USER", "ADMIN"));
 
         } else {
             userService.updateUser(user);
@@ -80,7 +97,7 @@ public class MainController {
     public String edit(@RequestParam("id") long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
         model.addAttribute("users", userService.getUsers());
-        model.addAttribute("ROLES", Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
+        model.addAttribute("ROLES", Arrays.asList("USER", "ADMIN"));
         return "/edit-user";
     }
 
@@ -88,7 +105,7 @@ public class MainController {
     public String getForm(Model model){
         model.addAttribute("user", new User());
         model.addAttribute("users", userService.getUsers());
-        model.addAttribute("ROLES", Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
+        model.addAttribute("ROLES", Arrays.asList("USER", "ADMIN"));
         return "/registration";
     }
 

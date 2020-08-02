@@ -18,7 +18,7 @@
         }
     </style>
 
-    <title>Admin panel</title>
+    <title>Add new user</title>
 
 </head>
 
@@ -55,59 +55,60 @@
                 <h2>Admin panel</h2>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#" th:href="@{/admin}">Users table</a>
+                        <a class="nav-link" href="#" th:href="@{/admin}">Users table</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" th:href="@{/admin/add-new-user}">New user</a>
+                        <a class="nav-link active" href="#" th:href="@{/admin/add-new-user}">New user</a>
                     </li>
                 </ul>
                 <div>
                     <table class="table table-bordered table-light">
                         <thead class="table-active">
                         <tr style="font-size: 20px">
-                            <th>All users</th>
+                            <th>Add new user</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td style="vertical-align: middle">
-                                <div class="pt-3 pr-3 pl-3">
-                                    <table class="table table-hover table-borderless">
-                                        <tbody>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Age</th>
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
-                                        </tr>
-                                        <tr th:block th:each="user : ${users}">
-                                            <td th:utext="${user.id}"></td>
-                                            <td th:utext="${user.firstName}"></td>
-                                            <td th:utext="${user.lastName}"></td>
-                                            <td th:utext="${user.age}"></td>
-                                            <td th:utext="${user.login}"></td>
-                                            <td style="white-space: nowrap">
-                                                <th:block th:each="role : ${user.roles}">
-                                                    <div th:utext="${role.getName()}"></div>
-                                                </th:block>
-                                            </td>
-                                            <td>
-                                                <form th:action="@{admin/edit-user(id=${user.getId()})}" method="post">
-                                                    <button class="btn btn-info btn-sm">Edit</button>
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <form th:action="@{admin/delete(id=${user.getId()})}" method="post">
-                                                    <button class="btn btn-danger btn-sm">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                            <td>
+                                <div class="container text-center" style="width: 350px">
+                                    <form class="m-3" role="form">
+                                        <div class="form-group">
+                                            <label for="firstName">First name</label>
+                                            <input id="firstName" class="form-control" type="text"
+                                                   placeholder="Введите имя">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lastName">Last name</label>
+                                            <input id="lastName" class="form-control" type="text"
+                                                   placeholder="Введите фамилию">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="age">Age</label>
+                                            <input id="age" class="form-control" type="text"
+                                                   placeholder="Введите возраст">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input id="email" class="form-control" type="email"
+                                                   placeholder="Введите email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">Password</label>
+                                            <input id="password" class="form-control" type="password"
+                                                   placeholder="Введите пароль">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="role">Role</label>
+                                            <select class="custom-select" style="height: 40px" id="role" multiple>
+                                                <option value="1">ADMIN</option>
+                                                <option value="2">USER</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                    <div>
+                                        <button class="btn btn-success">Add new user</button>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

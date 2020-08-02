@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Подключаем Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <style>
@@ -41,11 +43,15 @@
 
 <div class="container-fluid table-active">
     <div class="row vh-100">
-        <div class="col-md-2 vh-100 table-light"></div>
+        <div class="col-md-2 vh-100 table-light pl-0 pr-0 pt-3">
+                <form th:action="@{/user}" method="get">
+                    <button style="text-align: left" class="btn btn-primary btn-block">User</button>
+                </form>
+        </div>
         <div class="col-md-10 vh-100">
             <div class="container-fluid vh-100">
                 <div class="starter-template">
-                    <h1>User-information page</h1>
+                    <h2>User-information page</h2>
                 </div>
 
                 <div>
@@ -61,18 +67,24 @@
                                 <table class="table table-hover table-borderless">
                                     <tbody>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Login</th>
-                                        <th>Password</th>
-                                        <th>Roles</th>
+                                        <th>ID</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Age</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
                                     </tr>
                                     <tr>
                                         <td th:utext="${user.id}"></td>
+                                        <td th:utext="${user.firstName}"></td>
+                                        <td th:utext="${user.lastName}"></td>
+                                        <td th:utext="${user.age}"></td>
                                         <td th:utext="${user.login}"></td>
-                                        <td th:utext="${user.password}"></td>
-                                        <th:block th:each="role : ${user.roles}">
-                                            <td th:utext="${role.getName()}"></td>
-                                        </th:block>
+                                        <td style="white-space: nowrap">
+                                            <th:block th:each="role : ${user.roles}">
+                                                <div th:utext="${role.getName()}"></div>
+                                            </th:block>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>

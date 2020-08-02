@@ -23,6 +23,15 @@ public class User implements UserDetails {
     @Column(name = "id")
     private long id;
 
+    @Column(name = "firstName")
+    private String firstName;
+
+    @Column(name = "lastName")
+    private String lastName;
+
+    @Column(name = "age")
+    private byte age;
+
     @Column(name = "login")
     private String login;
 
@@ -36,8 +45,11 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(long id, String login, String password) {
+    public User(long id, String firstName, String lastName, byte age, String login, String password) {
         this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
         this.login = login;
         this.password = password;
     }
@@ -48,6 +60,31 @@ public class User implements UserDetails {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public byte getAge() {
+        return age;
+    }
+
+    public void setAge(byte age) {
+        this.age = age;
     }
 
     public String getLogin() {
