@@ -8,7 +8,6 @@
 
     <!-- Подключаем Bootstrap CSS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -43,12 +42,14 @@
 <div class="container-fluid table-active">
     <div class="row vh-100">
         <div class="col-md-2 vh-100 table-light pl-0 pr-0 pt-3">
-            <form th:action="@{/admin}" method="get">
-                <button style="text-align: left" class="btn btn-primary btn-block">Admin</button>
-            </form>
-            <form th:action="@{/user}" method="get">
-                <button style="text-align: left" class="btn btn-link btn-block">User</button>
-            </form>
+            <ul class="nav nav-pills flex-column" aria-orientation="vertical">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" th:href="@{/admin}">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/admin/admin-user}">User</a>
+                </li>
+            </ul>
         </div>
         <div class="col-md-10 vh-100 d-flex">
             <div class="container-fluid vh-100">
@@ -96,14 +97,13 @@
                                                 </th:block>
                                             </td>
                                             <td>
-                                                <form th:action="@{admin/edit-user(id=${user.getId()})}" method="post">
-                                                    <button class="btn btn-info btn-sm">Edit</button>
-                                                </form>
+                                                <button class="btn btn-info btn-sm" data-toggle="modal"
+                                                        data-target="#editModal">Edit
+                                                </button>
                                             </td>
                                             <td>
-                                                <form th:action="@{admin/delete(id=${user.getId()})}" method="post">
-                                                    <button class="btn btn-danger btn-sm">Delete</button>
-                                                </form>
+                                                <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        data-target="#deleteModal">Delete</button>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -114,6 +114,125 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="editModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit user</h4>
+                <button class="close" data-dismiss="modal">x</button>
+            </div>
+            <div class="modal-body" style="padding-right: 50px; padding-left: 50px">
+                <form action="#" id="editUser" class="m-3" role="form" th:action="@{/admin/add}" th:object="${user}"
+                      method="post">
+                    <div class="form-group">
+                        <label for="id1">ID</label>
+                        <input id="id1" class="form-control" type="text"
+                               placeholder="Введите ID" th:field="*{id}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName1">First name</label>
+                        <input id="firstName1" class="form-control" type="text"
+                               placeholder="Введите имя" th:field="*{firstName}">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName1">Last name</label>
+                        <input id="lastName1" class="form-control" type="text"
+                               placeholder="Введите фамилию" th:field="*{lastName}">
+                    </div>
+                    <div class="form-group">
+                        <label for="age1">Age</label>
+                        <input id="age1" class="form-control" type="text"
+                               placeholder="Введите возраст" th:field="*{age}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email1">Email</label>
+                        <input id="email1" class="form-control" type="email"
+                               placeholder="Введите email" th:field="*{login}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password1">Password</label>
+                        <input id="password1" class="form-control" type="password"
+                               placeholder="Введите пароль" th:field="*{password}">
+                    </div>
+                    <div class="form-group">
+                        <label for="role1">Role</label>
+                        <select class="custom-select" style="height: 40px" id="role1" multiple th:field="*{roles}">
+                            <option name="roles"
+                                    th:each="role : ${ROLES}"
+                                    th:value="${role}"
+                                    th:text="${role}"></option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" data-dismiss="modal" form="editUser">Close</button>
+                <button class="btn btn-success" type="submit" form="editUser">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete user</h4>
+                <button class="close" data-dismiss="modal">x</button>
+            </div>
+            <div class="modal-body" style="padding-right: 50px; padding-left: 50px">
+                <form action="#" id="data" class="m-3" role="form" th:action="@{/admin/delete}" th:object="${user}"
+                      method="post">
+                    <div class="form-group">
+                        <label for="id">ID</label>
+                        <input id="id" class="form-control" type="text"
+                               placeholder="Введите ID" th:field="*{id}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">First name</label>
+                        <input id="firstName" class="form-control" type="text"
+                               placeholder="Введите имя" th:field="*{firstName}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last name</label>
+                        <input id="lastName" class="form-control" type="text"
+                               placeholder="Введите фамилию" th:field="*{lastName}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input id="age" class="form-control" type="text"
+                               placeholder="Введите возраст" th:field="*{age}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" class="form-control" type="email"
+                               placeholder="Введите email" th:field="*{login}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input id="password" class="form-control" type="password"
+                               placeholder="Введите пароль" th:field="*{password}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Role</label>
+                        <select class="custom-select" style="height: 40px" id="role" multiple th:field="*{roles}"
+                                readonly>
+                            <option name="roles"
+                                    th:each="role : ${ROLES}"
+                                    th:value="${role}"
+                                    th:text="${role}"></option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" data-dismiss="modal" form="data">Close</button>
+                <button class="btn btn-danger" type="submit" form="data">Delete</button>
             </div>
         </div>
     </div>

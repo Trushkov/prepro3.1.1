@@ -35,9 +35,11 @@
         <td th:utext="${user.lastName}"></td>
         <td th:utext="${user.age}"></td>
         <td th:utext="${user.login}"></td>
-        <th:block th:each="role : ${user.roles}">
-            <td th:utext="${role.getName()}"></td>
-        </th:block>
+        <td>
+            <th:block th:each="role : ${user.roles}">
+                <div th:utext="${role.getName()}"></div>
+            </th:block>
+        </td>
         <td><a href="#" th:href="@{admin/users/delete(id=${user.getId()})}">del</a> |
             <a href="#" th:href="@{admin/edit-user(id=${user.getId()})}">edit</a>
         </td>

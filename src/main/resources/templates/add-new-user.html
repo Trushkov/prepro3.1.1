@@ -43,12 +43,14 @@
 <div class="container-fluid table-active">
     <div class="row vh-100">
         <div class="col-md-2 vh-100 table-light pl-0 pr-0 pt-3">
-            <form th:action="@{/admin}" method="get">
-                <button style="text-align: left" class="btn btn-primary btn-block">Admin</button>
-            </form>
-            <form th:action="@{/user}" method="get">
-                <button style="text-align: left" class="btn btn-link btn-block">User</button>
-            </form>
+            <ul class="nav nav-pills flex-column" aria-orientation="vertical">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" th:href="@{/admin}">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/admin/admin-user}">User</a>
+                </li>
+            </ul>
         </div>
         <div class="col-md-10 vh-100 d-flex">
             <div class="container-fluid vh-100">
@@ -72,43 +74,45 @@
                         <tr>
                             <td>
                                 <div class="container text-center" style="width: 350px">
-                                    <form class="m-3" role="form">
+                                    <form action="#" id="data" class="m-3" role="form" th:action="@{/admin/add}" th:object="${user}" method="post">
                                         <div class="form-group">
                                             <label for="firstName">First name</label>
                                             <input id="firstName" class="form-control" type="text"
-                                                   placeholder="Введите имя">
+                                                   placeholder="Введите имя" th:field="*{firstName}">
                                         </div>
                                         <div class="form-group">
                                             <label for="lastName">Last name</label>
                                             <input id="lastName" class="form-control" type="text"
-                                                   placeholder="Введите фамилию">
+                                                   placeholder="Введите фамилию" th:field="*{lastName}">
                                         </div>
                                         <div class="form-group">
                                             <label for="age">Age</label>
                                             <input id="age" class="form-control" type="text"
-                                                   placeholder="Введите возраст">
+                                                   placeholder="Введите возраст" th:field="*{age}">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input id="email" class="form-control" type="email"
-                                                   placeholder="Введите email">
+                                                   placeholder="Введите email" th:field="*{login}">
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password</label>
                                             <input id="password" class="form-control" type="password"
-                                                   placeholder="Введите пароль">
+                                                   placeholder="Введите пароль" th:field="*{password}">
                                         </div>
                                         <div class="form-group">
                                             <label for="role">Role</label>
-                                            <select class="custom-select" style="height: 40px" id="role" multiple>
-                                                <option value="1">ADMIN</option>
-                                                <option value="2">USER</option>
+                                            <select class="custom-select" style="height: 40px" id="role" multiple th:field="*{roles}">
+                                                <option name="roles"
+                                                        th:each="role : ${ROLES}"
+                                                        th:value="${role}"
+                                                        th:text="${role}"></option>
                                             </select>
                                         </div>
+                                        <div>
+                                            <button class="btn btn-success" type="submit" form="data">Add new user</button>
+                                        </div>
                                     </form>
-                                    <div>
-                                        <button class="btn btn-success">Add new user</button>
-                                    </div>
                                 </div>
                             </td>
                         </tr>

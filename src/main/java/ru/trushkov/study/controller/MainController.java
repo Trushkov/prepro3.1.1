@@ -38,6 +38,16 @@ public class MainController {
         return "/user";
     }
 
+    @RequestMapping(value = "/admin/admin-user", method = RequestMethod.GET)
+    public String getAdminUserInfo(Model model){
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        model.addAttribute("user", user);
+        return "/admin-user";
+    }
+
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String getUsers(ModelMap model) {
         User user = (User) SecurityContextHolder
@@ -65,7 +75,7 @@ public class MainController {
 
     @RequestMapping(value = "/admin/add", method = {RequestMethod.POST, RequestMethod.GET})
     public String addUser(@ModelAttribute("user") User user, Model model,
-                          @RequestParam(value = "rolesValues") String [] roles) {
+                          @RequestParam(value = "roles") String [] roles) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Set<Role> roleSet = new HashSet<>();
         for (String role: roles
