@@ -1,6 +1,8 @@
 package ru.trushkov.study.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -14,9 +16,10 @@ import ru.trushkov.study.service.UserService;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-@Controller
+@RestController
 public class MainController {
 
     @Autowired
@@ -28,17 +31,54 @@ public class MainController {
     @Autowired
     RoleServiceImpl roleService;
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String getUserInfo(Model model){
+    @GetMapping(value = {"/user", "/admin", "/admin/admin-user",
+            "/admin/add-new-user", "/admin/add", "/admin/edit-user", "/registration"})
+    public ResponseEntity<User> getUserInfo(){
         User user = (User) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        model.addAttribute("user", user);
-        return "/user";
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/admin/admin-user", method = RequestMethod.GET)
+    /*@GetMapping(value = {"/admin", "/registration"})
+    public ResponseEntity<List<User>> getUsers(){
+        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = {"/user", "/admin", "/admin/admin-user",
+            "/admin/add-new-user", "/admin/add", "/registration"})
+    public ResponseEntity<Set<Role>> getRoles(){
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        return new ResponseEntity<>(user.getRoles(), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/admin/add")
+    public ResponseEntity<?> addUser(@ModelAttribute("user") User user,
+                          @RequestParam(value = "roles") String [] roles) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Set<Role> roleSet = new HashSet<>();
+        for (String role: roles
+        ) {
+            if (!roleService.hasRole(role)){
+                roleService.addRole(new Role(role));
+            }
+            roleSet.add(roleService.getRole(role));
+        }
+        user.setRoles(roleSet);
+        if (user.getId() == 0) {
+            userService.addUser(user);
+        } else {
+            userService.updateUser(user);
+        }
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+
+    @GetMapping(value = "/admin/admin-user")
     public String getAdminUserInfo(Model model){
         User user = (User) SecurityContextHolder
                 .getContext()
@@ -48,7 +88,7 @@ public class MainController {
         return "/admin-user";
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    @GetMapping(value = "/admin")
     public String getUsers(ModelMap model) {
         User user = (User) SecurityContextHolder
                 .getContext()
@@ -136,18 +176,8 @@ public class MainController {
         return "redirect:/registration";
     }
 
-    @GetMapping("/about")
-    public String about() {
-        return "/about";
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "/login";
-    }
-
     @GetMapping("/403")
     public String error403() {
         return "/error/403";
-    }
+    }*/
 }

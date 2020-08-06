@@ -18,6 +18,32 @@
         }
     </style>
 
+    <script type="text/javascript">
+        $(document).ready(function (data) {
+            console.log(data);
+            $.get('/user', function (data) {
+                console.log(data);
+                let table = "<table class=\"table table-hover table-borderless\">\n" +
+                    "                                        <tbody>\n" +
+                    "                                        <tr>\n" +
+                    "                                            <th>ID</th>\n" +
+                    "                                            <th>First Name</th>\n" +
+                    "                                            <th>Last Name</th>\n" +
+                    "                                            <th>Age</th>\n" +
+                    "                                            <th>Email</th>\n" +
+                    "                                            <th>Role</th>\n" +
+                    "                                        </tr>";
+                    table = table + "<tr><td>" + data.id + "</td><td>" + data.firstName + "</td><td>"
+                        + data.lastName + "</td><td>" + data.age + "</td><td>" + data.login + "</td><td>"
+                        + data.roles + "</td></tr>"
+
+                table = table + "</table>";
+                $("#user-table").html(table);
+            })
+
+        })
+    </script>
+
     <title>User page</title>
 
 </head>
@@ -66,31 +92,8 @@
                         <tbody>
                         <tr>
                             <td style="vertical-align: middle">
-                                <div class="pt-3 pr-3 pl-3">
-                                    <table class="table table-hover table-borderless">
-                                        <tbody>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Age</th>
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                        </tr>
-                                        <tr>
-                                            <td th:utext="${user.id}"></td>
-                                            <td th:utext="${user.firstName}"></td>
-                                            <td th:utext="${user.lastName}"></td>
-                                            <td th:utext="${user.age}"></td>
-                                            <td th:utext="${user.login}"></td>
-                                            <td style="white-space: nowrap">
-                                                <th:block th:each="role : ${user.roles}">
-                                                    <div th:utext="${role.getName()}"></div>
-                                                </th:block>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div id="user-table" class="pt-3 pr-3 pl-3">
+
                                 </div>
                             </td>
                         </tr>
@@ -101,6 +104,8 @@
         </div>
     </div>
 </div>
+
+<script src="test2.js"></script>
 <!-- Последняя компиляция и сжатый CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
       integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">

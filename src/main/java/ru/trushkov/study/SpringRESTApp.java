@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class SpringBootWebSpringSecurityApplication {
+public class SpringRESTApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootWebSpringSecurityApplication.class, args);
+		SpringApplication.run(SpringRESTApp.class, args);
 	}
 }
