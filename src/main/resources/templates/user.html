@@ -33,9 +33,9 @@
                     "                                            <th>Email</th>\n" +
                     "                                            <th>Role</th>\n" +
                     "                                        </tr>";
-                    table = table + "<tr><td>" + data.id + "</td><td>" + data.firstName + "</td><td>"
-                        + data.lastName + "</td><td>" + data.age + "</td><td>" + data.login + "</td><td>"
-                        + data.roles + "</td></tr>"
+                table = table + "<tr><td>" + data.id + "</td><td>" + data.firstName + "</td><td>"
+                    + data.lastName + "</td><td>" + data.age + "</td><td>" + data.login + "</td><td>"
+                    + data.roles + "</td></tr>"
 
                 table = table + "</table>";
                 $("#user-table").html(table);
@@ -54,11 +54,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark m-0">
     <div class="d-flex flex-grow-1">
         <span class="w-100 d-lg-none d-block"></span>
-        <a href="#" class="navbar-brand  navbar-left"><strong>[[${user.login}]]</strong> with roles:
-            <th:block th:each="role : ${user.roles}">
-                <td th:utext="${role.getName()}"></td>
-            </th:block>
-        </a>
+        <a href="#" class="navbar-brand  navbar-left"><strong>user.login: roles</strong> with roles:</a>
     </div>
     <div class="pull-right">
         <form th:action="@{/logout}" method="post">
@@ -92,8 +88,22 @@
                         <tbody>
                         <tr>
                             <td style="vertical-align: middle">
-                                <div id="user-table" class="pt-3 pr-3 pl-3">
-
+                                <div class="pt-3 pr-3 pl-3">
+                                    <table class="table table-hover table-borderless">
+                                        <tbody>
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Age</th>
+                                            <th>Login</th>
+                                            <th>Roles</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="data">
+                                        </tbody>
+                                    </table>
                                 </div>
                             </td>
                         </tr>
@@ -103,20 +113,63 @@
             </div>
         </div>
     </div>
+
+    <script>
+        `use strict`
+        fetch("/user_data").then(
+            res => {
+                res.json().then(
+                    data => {
+                        let role = "";
+                        $.each(data.roles, function (index, value) {
+                            role += value.name+" ";})
+                        console.log(data);
+                        let table = `<tr><td>${data.id}</td>
+                                     <td>${data.firstName}</td>
+                                     <td>${data.lastName}</td>
+                                     <td>${data.age}</td>
+                                     <td>${data.login}</td>
+                                     <td>${role}</td>
+                                 </tr>`
+                        document.getElementById("data").innerHTML = table;
+                    }
+                )
+            }
+        )
+    </script>
 </div>
 
-<script src="test2.js"></script>
-<!-- Последняя компиляция и сжатый CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--<script src="../static/js/index.js"></script>-->
+    <!-- Последняя компиляция и сжатый CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<!-- Дополнение к теме -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Дополнение к теме -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-<!-- Последняя компиляция и сжатый JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
+    <!-- Последняя компиляция и сжатый JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 </body>
 </html>
+<!--
+<script>
+    fetch("/user").then(
+        res=>{
+            res.json().then(
+                data=>{
+                    console.log(data);
+                    if (data.length > 0){
+                        let temp = "";
+                        data.forEach((u)=>{
+                                temp += "<tr>"
+                            }
+                        )
+                    }
+                }
+            )
+        }
+    )
+</script>-->

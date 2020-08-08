@@ -31,8 +31,7 @@ public class MainController {
     @Autowired
     RoleServiceImpl roleService;
 
-    @GetMapping(value = {"/user", "/admin", "/admin/admin-user",
-            "/admin/add-new-user", "/admin/add", "/admin/edit-user", "/registration"})
+    @GetMapping(value = {"/user_data"})
     public ResponseEntity<User> getUserInfo(){
         User user = (User) SecurityContextHolder
                 .getContext()
@@ -41,12 +40,12 @@ public class MainController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    /*@GetMapping(value = {"/admin", "/registration"})
+    @GetMapping(value = {"/admin", "/registration"})
     public ResponseEntity<List<User>> getUsers(){
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/user", "/admin", "/admin/admin-user",
+    /*@GetMapping(value = {"/user", "/admin", "/admin/admin-user",
             "/admin/add-new-user", "/admin/add", "/registration"})
     public ResponseEntity<Set<Role>> getRoles(){
         User user = (User) SecurityContextHolder
