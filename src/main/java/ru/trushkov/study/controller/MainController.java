@@ -40,7 +40,7 @@ public class MainController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/admin", "/registration"})
+    @GetMapping(value = {"/admin/users_data", "/registration"})
     public ResponseEntity<List<User>> getUsers(){
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
@@ -87,7 +87,7 @@ public class MainController {
         return "/admin-user";
     }
 
-    @GetMapping(value = "/admin")
+   @GetMapping(value = "/admin/get_users")
     public String getUsers(ModelMap model) {
         User user = (User) SecurityContextHolder
                 .getContext()
