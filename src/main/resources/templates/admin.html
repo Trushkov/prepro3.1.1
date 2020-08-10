@@ -26,7 +26,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark m-0">
     <div class="d-flex flex-grow-1">
         <span class="w-100 d-lg-none d-block"></span>
-        <a href="#" class="navbar-brand  navbar-left" id="head">
+        <a href="#" id="head" class="navbar-brand  navbar-left">
         </a>
     </div>
     <div class="pull-right">
@@ -56,36 +56,21 @@
                         <a class="nav-link active" href="#" th:href="@{/admin}">Users table</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" th:href="@{/admin/add-new-user}">New user</a>
+                        <a id="new_user_form" class="nav-link" href="#">New user</a>
                     </li>
                 </ul>
                 <div>
                     <table class="table table-bordered table-light">
                         <thead class="table-active">
                         <tr style="font-size: 20px">
-                            <th>All users</th>
+                            <th id="table_name"></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <td style="vertical-align: middle">
-                                <div class="pt-3 pr-3 pl-3">
-                                    <table class="table table-hover table-borderless">
-                                        <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Age</th>
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="data_table">
-                                        </tbody>
-                                    </table>
+                                <div id="table_data" class="pt-3 pr-3 pl-3">
+
                                 </div>
                             </td>
                         </tr>
@@ -231,37 +216,104 @@
 </script>
 
 <script>
+    window.onload = function () {
+        let a = document.getElementById("new_user_form");
+        a.onclick = function () {
+            let input_form = "<div class=\"container text-center\" style=\"width: 350px\">\n" +
+                "                                    <form action=\"#\" id=\"data\" class=\"m-3\" role=\"form\" th:action=\"@{/admin/add}\" method=\"post\">\n" +
+                "                                        <div class=\"form-group\">\n" +
+                "                                            <label for=\"firstName\">First name</label>\n" +
+                "                                            <input id=\"firstName\" class=\"form-control\" type=\"text\"\n" +
+                "                                                   placeholder=\"Введите имя\">\n" +
+                "                                        </div>\n" +
+                "                                        <div class=\"form-group\">\n" +
+                "                                            <label for=\"lastName\">Last name</label>\n" +
+                "                                            <input id=\"lastName\" class=\"form-control\" type=\"text\"\n" +
+                "                                                   placeholder=\"Введите фамилию\">\n" +
+                "                                        </div>\n" +
+                "                                        <div class=\"form-group\">\n" +
+                "                                            <label for=\"age\">Age</label>\n" +
+                "                                            <input id=\"age\" class=\"form-control\" type=\"text\"\n" +
+                "                                                   placeholder=\"Введите возраст\">\n" +
+                "                                        </div>\n" +
+                "                                        <div class=\"form-group\">\n" +
+                "                                            <label for=\"email\">Email</label>\n" +
+                "                                            <input id=\"email\" class=\"form-control\" type=\"email\"\n" +
+                "                                                   placeholder=\"Введите email\">\n" +
+                "                                        </div>\n" +
+                "                                        <div class=\"form-group\">\n" +
+                "                                            <label for=\"password\">Password</label>\n" +
+                "                                            <input id=\"password\" class=\"form-control\" type=\"password\"\n" +
+                "                                                   placeholder=\"Введите пароль\">\n" +
+                "                                        </div>\n" +
+                "                                        <div class=\"form-group\">\n" +
+                "                                            <label for=\"role\">Role</label>\n" +
+                "                                            <select class=\"custom-select\" style=\"height: 40px\" id=\"role\" multiple>\n" +
+                "                                                <option name=\"roles\"></option>\n" +
+                "                                            </select>\n" +
+                "                                        </div>\n" +
+                "                                        <div>\n" +
+                "                                            <button class=\"btn btn-success\" type=\"submit\" form=\"data\">Add new user</button>\n" +
+                "                                        </div>\n" +
+                "                                    </form>\n" +
+                "                                </div>"
+            document.getElementById("table_data").innerHTML = input_form;
+            document.getElementById("table_name").innerText = "Add new user";
+            return false;
+        }
+    }
+</script>
+
+<script>
+    `use strict`
     fetch("/admin/users_data").then(
         res => {
             res.json().then(
                 data => {
                     console.log(data);
                     if (data.length > 0) {
-                        let temp = "";
+                        let temp = "<table class=\"table table-hover table-borderless\">\n" +
+                            "           <thead>\n" +
+                            "               <tr>\n" +
+                            "                   <th>ID</th>\n" +
+                            "                   <th>First Name</th>\n" +
+                            "                   <th>Last Name</th>\n" +
+                            "                   <th>Age</th>\n" +
+                            "                   <th>Email</th>\n" +
+                            "                   <th>Role</th>\n" +
+                            "                   <th>Edit</th>\n" +
+                            "                   <th>Delete</th>\n" +
+                            "               </tr>\n" +
+                            "            </thead>\n" +
+                            "            <tbody>";
                         data.forEach((el) => {
                                 let role = "";
                                 $.each(el.roles, function (index, value) {
                                     role += value.name + " ";
                                 })
-                                temp += `<tr><td>${el.id}</td>
-                                     <td>${el.firstName}</td>
-                                     <td>${el.lastName}</td>
-                                     <td>${el.age}</td>
-                                     <td>${el.login}</td>
-                                     <td>${role}</td>
-                                     <td>
-                                                <button class="btn btn-info btn-sm" data-toggle="modal"
-                                                        data-target="#editModal">Edit
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-danger btn-sm" data-toggle="modal"
-                                                        data-target="#deleteModal">Delete</button>
-                                            </td>
-                                 </tr>`
-                                document.getElementById("data_table").innerHTML = temp;
+                                temp += `<tr class=\'vertical-align: middle\'>
+                                             <td>${el.id}</td>
+                                             <td>${el.firstName}</td>
+                                             <td>${el.lastName}</td>
+                                             <td>${el.age}</td>
+                                             <td>${el.login}</td>
+                                             <td>${role}</td>
+                                             <td>
+                                                 <button class="btn btn-info btn-sm" data-toggle="modal"
+                                                                data-target="#editModal">Edit
+                                                 </button>
+                                             </td>
+                                             <td>
+                                                 <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                                                data-target="#deleteModal">Delete</button>
+                                             </td>
+                                        </tr>`
                             }
                         )
+                        temp += "</tbody>" +
+                            "</table>";
+                        document.getElementById("table_data").innerHTML = temp;
+                        document.getElementById("table_name").innerText = "All users";
                     }
                 }
             )

@@ -74,39 +74,36 @@
                         <tr>
                             <td>
                                 <div class="container text-center" style="width: 350px">
-                                    <form action="#" id="data" class="m-3" role="form" th:action="@{/admin/add}" th:object="${user}" method="post">
+                                    <form action="#" id="data" class="m-3" role="form" th:action="@{/admin/add}" method="post">
                                         <div class="form-group">
                                             <label for="firstName">First name</label>
                                             <input id="firstName" class="form-control" type="text"
-                                                   placeholder="Введите имя" th:field="*{firstName}">
+                                                   placeholder="Введите имя">
                                         </div>
                                         <div class="form-group">
                                             <label for="lastName">Last name</label>
                                             <input id="lastName" class="form-control" type="text"
-                                                   placeholder="Введите фамилию" th:field="*{lastName}">
+                                                   placeholder="Введите фамилию">
                                         </div>
                                         <div class="form-group">
                                             <label for="age">Age</label>
                                             <input id="age" class="form-control" type="text"
-                                                   placeholder="Введите возраст" th:field="*{age}">
+                                                   placeholder="Введите возраст">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input id="email" class="form-control" type="email"
-                                                   placeholder="Введите email" th:field="*{login}">
+                                                   placeholder="Введите email">
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password</label>
                                             <input id="password" class="form-control" type="password"
-                                                   placeholder="Введите пароль" th:field="*{password}">
+                                                   placeholder="Введите пароль">
                                         </div>
                                         <div class="form-group">
                                             <label for="role">Role</label>
-                                            <select class="custom-select" style="height: 40px" id="role" multiple th:field="*{roles}">
-                                                <option name="roles"
-                                                        th:each="role : ${ROLES}"
-                                                        th:value="${role}"
-                                                        th:text="${role}"></option>
+                                            <select class="custom-select" style="height: 40px" id="role" multiple>
+                                                <option name="roles"></option>
                                             </select>
                                         </div>
                                         <div>
