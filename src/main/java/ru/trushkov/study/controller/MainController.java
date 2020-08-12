@@ -32,7 +32,7 @@ public class MainController {
     RoleServiceImpl roleService;
 
     @GetMapping(value = {"/user_data"})
-    public ResponseEntity<User> getUserInfo(){
+    public ResponseEntity<User> getUserInfo() {
         User user = (User) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
@@ -41,7 +41,7 @@ public class MainController {
     }
 
     @GetMapping(value = {"/admin/users_data", "/registration"})
-    public ResponseEntity<List<User>> getUsers(){
+    public ResponseEntity<List<User>> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
@@ -53,21 +53,16 @@ public class MainController {
                 .getAuthentication()
                 .getPrincipal();
         return new ResponseEntity<>(user.getRoles(), HttpStatus.OK);
-    }
+    }*/
 
-    @PostMapping(value = "/admin/add")
-    public ResponseEntity<?> addUser(@ModelAttribute("user") User user,
-                          @RequestParam(value = "roles") String [] roles) {
+    @PostMapping(value = "/add_user")
+    public ResponseEntity<?> addUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Set<Role> roleSet = new HashSet<>();
-        for (String role: roles
+
+        for (Role role : user.getRoles()
         ) {
-            if (!roleService.hasRole(role)){
-                roleService.addRole(new Role(role));
-            }
-            roleSet.add(roleService.getRole(role));
+            roleService.save(role);
         }
-        user.setRoles(roleSet);
         if (user.getId() == 0) {
             userService.addUser(user);
         } else {
@@ -77,7 +72,7 @@ public class MainController {
     }
 
 
-    @GetMapping(value = "/admin/admin-user")
+    /*@GetMapping(value = "/admin/admin-user")
     public String getAdminUserInfo(Model model){
         User user = (User) SecurityContextHolder
                 .getContext()

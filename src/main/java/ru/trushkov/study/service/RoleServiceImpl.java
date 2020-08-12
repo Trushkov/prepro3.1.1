@@ -32,6 +32,11 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findByName(name);
     }
 
+    @Override
+    public void save(Role role){
+        roleRepository.save(role);
+    }
+
     public RoleRepository getRoleRepository() {
         return roleRepository;
     }
@@ -39,4 +44,5 @@ public class RoleServiceImpl implements RoleService {
     public void setRoleRepository(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
+
 }

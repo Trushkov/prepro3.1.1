@@ -36,7 +36,7 @@
     </div>
 </nav>
 
-<div class="container-fluid table-active">
+<div class="container-fluid table-active vh-100">
     <div class="row vh-100">
         <div class="col-md-2 vh-100 table-light pl-0 pr-0 pt-3">
             <ul class="nav nav-pills flex-column" aria-orientation="vertical">
@@ -53,10 +53,10 @@
                 <h2>Admin panel</h2>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#" th:href="@{/admin}">Users table</a>
+                        <a class="nav-link" id="users_table" onclick="show_users()" href="#">Users table</a>
                     </li>
                     <li class="nav-item">
-                        <a id="new_user_form" class="nav-link" href="#">New user</a>
+                        <a  class="nav-link" id="new_user_form" onclick="show_input_form()" href="#">New user</a>
                     </li>
                 </ul>
                 <div>
@@ -94,7 +94,7 @@
                       method="post">
                     <div class="form-group">
                         <label for="id1">ID</label>
-                        <input id="id1" class="form-control" type="text"
+                        <input id="id1" class="form-control" type="text" value=""
                                placeholder="Введите ID" readonly>
                     </div>
                     <div class="form-group">
@@ -125,10 +125,7 @@
                     <div class="form-group">
                         <label for="role1">Role</label>
                         <select class="custom-select" style="height: 40px" id="role1" multiple>
-                            <option name="roles"
-
-
-                            ></option>
+                            <option name="roles"></option>
                         </select>
                     </div>
                 </form>
@@ -172,18 +169,14 @@
                                placeholder="Введите возраст" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input id="email" class="form-control" type="email"
+                        <label for="login">Email</label>
+                        <input id="login" class="form-control" type="email"
                                placeholder="Введите email" readonly>
                     </div>
+
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input id="password" class="form-control" type="password"
-                               placeholder="Введите пароль" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="role">Role</label>
-                        <select class="custom-select" style="height: 40px" id="role" multiple
+                        <label for="roles">Role</label>
+                        <select class="custom-select" style="height: 40px" id="roles" multiple
                                 readonly>
                             <option name="roles"></option>
                         </select>
@@ -197,6 +190,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        show_users()
+    })
+</script>
 
 <script>
     `use strict`
@@ -216,109 +215,171 @@
 </script>
 
 <script>
-    window.onload = function () {
-        let a = document.getElementById("new_user_form");
-        a.onclick = function () {
+  function show_input_form() {
             let input_form = "<div class=\"container text-center\" style=\"width: 350px\">\n" +
-                "                                    <form action=\"#\" id=\"data\" class=\"m-3\" role=\"form\" th:action=\"@{/admin/add}\" method=\"post\">\n" +
-                "                                        <div class=\"form-group\">\n" +
-                "                                            <label for=\"firstName\">First name</label>\n" +
-                "                                            <input id=\"firstName\" class=\"form-control\" type=\"text\"\n" +
-                "                                                   placeholder=\"Введите имя\">\n" +
-                "                                        </div>\n" +
-                "                                        <div class=\"form-group\">\n" +
-                "                                            <label for=\"lastName\">Last name</label>\n" +
-                "                                            <input id=\"lastName\" class=\"form-control\" type=\"text\"\n" +
-                "                                                   placeholder=\"Введите фамилию\">\n" +
-                "                                        </div>\n" +
-                "                                        <div class=\"form-group\">\n" +
-                "                                            <label for=\"age\">Age</label>\n" +
-                "                                            <input id=\"age\" class=\"form-control\" type=\"text\"\n" +
-                "                                                   placeholder=\"Введите возраст\">\n" +
-                "                                        </div>\n" +
-                "                                        <div class=\"form-group\">\n" +
-                "                                            <label for=\"email\">Email</label>\n" +
-                "                                            <input id=\"email\" class=\"form-control\" type=\"email\"\n" +
-                "                                                   placeholder=\"Введите email\">\n" +
-                "                                        </div>\n" +
-                "                                        <div class=\"form-group\">\n" +
-                "                                            <label for=\"password\">Password</label>\n" +
-                "                                            <input id=\"password\" class=\"form-control\" type=\"password\"\n" +
-                "                                                   placeholder=\"Введите пароль\">\n" +
-                "                                        </div>\n" +
-                "                                        <div class=\"form-group\">\n" +
-                "                                            <label for=\"role\">Role</label>\n" +
-                "                                            <select class=\"custom-select\" style=\"height: 40px\" id=\"role\" multiple>\n" +
-                "                                                <option name=\"roles\"></option>\n" +
-                "                                            </select>\n" +
-                "                                        </div>\n" +
-                "                                        <div>\n" +
-                "                                            <button class=\"btn btn-success\" type=\"submit\" form=\"data\">Add new user</button>\n" +
-                "                                        </div>\n" +
-                "                                    </form>\n" +
-                "                                </div>"
+                "               <form id=\"data\" class=\"m-3\" role=\"form\">\n" +
+                "                   <div class=\"form-group\">\n" +
+                "                       <label for=\"firstName\">First name</label>\n" +
+                "                       <input id=\"firstName\" class=\"form-control\" type=\"text\"\n" +
+                "                              placeholder=\"Введите имя\">\n" +
+                "                   </div>\n" +
+                "                   <div class=\"form-group\">\n" +
+                "                        <label for=\"lastName\">Last name</label>\n" +
+                "                        <input id=\"lastName\" class=\"form-control\" type=\"text\"\n" +
+                "                               placeholder=\"Введите фамилию\">\n" +
+                "                   </div>\n" +
+                "                   <div class=\"form-group\">\n" +
+                "                        <label for=\"age\">Age</label>\n" +
+                "                        <input id=\"age\" class=\"form-control\" type=\"text\"\n" +
+                "                               placeholder=\"Введите возраст\">\n" +
+                "                   </div>\n" +
+                "                   <div class=\"form-group\">\n" +
+                "                        <label for=\"email\">Email</label>\n" +
+                "                        <input id=\"email\" class=\"form-control\" type=\"email\"\n" +
+                "                               placeholder=\"Введите email\">\n" +
+                "                   </div>\n" +
+                "                   <div class=\"form-group\">\n" +
+                "                        <label for=\"password\">Password</label>\n" +
+                "                        <input id=\"password\" class=\"form-control\" type=\"password\"\n" +
+                "                               placeholder=\"Введите пароль\">\n" +
+                "                   </div>\n" +
+                "                        <div class=\"form-group\">\n" +
+                "                        <label for=\"role\">Role</label>\n" +
+                "                        <select id=\"role\" class=\"custom-select\" style=\"height: 40px\" multiple>\n" +
+                "                           <option name=\"ADMIN\">ADMIN</option>\n <option name=\"USER\">USER</option>" +
+                "                        </select>\n" +
+                "                        </div>\n" +
+                "                        <div>\n" +
+                "                           <button id=\"add_user\" onclick=\"send_user()\" class=\"btn btn-success\" type=\"submit\" " +
+                "                                   form=\"data\">Add new user</button>\n" +
+                "                        </div>\n" +
+                "               </form>\n" +
+                "           </div>"
             document.getElementById("table_data").innerHTML = input_form;
             document.getElementById("table_name").innerText = "Add new user";
+            $(`#users_table`).removeClass(`active`);
+            $(`#new_user_form`).addClass(`active`);
             return false;
-        }
-    }
+          }
 </script>
 
 <script>
     `use strict`
-    fetch("/admin/users_data").then(
-        res => {
-            res.json().then(
-                data => {
-                    console.log(data);
-                    if (data.length > 0) {
-                        let temp = "<table class=\"table table-hover table-borderless\">\n" +
-                            "           <thead>\n" +
-                            "               <tr>\n" +
-                            "                   <th>ID</th>\n" +
-                            "                   <th>First Name</th>\n" +
-                            "                   <th>Last Name</th>\n" +
-                            "                   <th>Age</th>\n" +
-                            "                   <th>Email</th>\n" +
-                            "                   <th>Role</th>\n" +
-                            "                   <th>Edit</th>\n" +
-                            "                   <th>Delete</th>\n" +
-                            "               </tr>\n" +
-                            "            </thead>\n" +
-                            "            <tbody>";
-                        data.forEach((el) => {
-                                let role = "";
-                                $.each(el.roles, function (index, value) {
-                                    role += value.name + " ";
-                                })
-                                temp += `<tr class=\'vertical-align: middle\'>
+    function show_users() {
+        fetch("/admin/users_data").then(
+            res => {
+                res.json().then(
+                    data => {
+                        console.log(data);
+                        if (data.length > 0) {
+                            let temp = "<table class=\"table table-hover table-borderless\">\n" +
+                                "           <thead>\n" +
+                                "               <tr>\n" +
+                                "                   <th>ID</th>\n" +
+                                "                   <th>First Name</th>\n" +
+                                "                   <th>Last Name</th>\n" +
+                                "                   <th>Age</th>\n" +
+                                "                   <th>Email</th>\n" +
+                                "                   <th>Role</th>\n" +
+                                "                   <th>Edit</th>\n" +
+                                "                   <th>Delete</th>\n" +
+                                "               </tr>\n" +
+                                "            </thead>\n" +
+                                "            <tbody>";
+                            data.forEach((el) => {
+                                    let role = "";
+                                    $.each(el.roles, function (index, value) {
+                                        role += value.name + " ";
+                                    })
+                                    temp += `<tr class=\'vertical-align: middle\'>
                                              <td>${el.id}</td>
-                                             <td>${el.firstName}</td>
-                                             <td>${el.lastName}</td>
-                                             <td>${el.age}</td>
-                                             <td>${el.login}</td>
-                                             <td>${role}</td>
+                                             <td id="firstName${el.id}">${el.firstName}</td>
+                                             <td id="lastName${el.id}">${el.lastName}</td>
+                                             <td id="age${el.id}">${el.age}</td>
+                                             <td id="login${el.id}">${el.login}</td>
+                                             <td id="roles${el.id}">${role}</td>
                                              <td>
-                                                 <button class="btn btn-info btn-sm" data-toggle="modal"
+                                                 <button data-id="${el.id}" class="btn btn-info btn-sm" data-toggle="modal"
                                                                 data-target="#editModal">Edit
                                                  </button>
                                              </td>
                                              <td>
-                                                 <button class="btn btn-danger btn-sm" data-toggle="modal"
-                                                                data-target="#deleteModal">Delete</button>
+                                                 <button id="delete" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                                data-target="#deleteModal" onclick="openDeleteModal('${el.id}')">Delete</button>
                                              </td>
                                         </tr>`
-                            }
-                        )
-                        temp += "</tbody>" +
-                            "</table>";
-                        document.getElementById("table_data").innerHTML = temp;
-                        document.getElementById("table_name").innerText = "All users";
+                                }
+                            )
+                                    temp += "</tbody>" +
+                                        "</table>";
+                            document.getElementById("table_data").innerHTML = temp;
+                            document.getElementById("table_name").innerText = "All users";
+                        }
                     }
-                }
-            )
-        }
-    )
+                )
+            }
+        )
+        $(`#users_table`).addClass(`active`);
+        $(`#new_user_form`).removeClass(`active`);
+    }
+    function openDeleteModal(id) {
+        let firstName = $('#firstName' + id).text();
+        let lastName = $('#lastName' + id).text();
+        let age = $('#age' + id).text();
+        let login = $('#login' + id).text();
+        let roles = $('#roles' + id).text().trim().split(" ");
+        $('#deleteModal #id').val(id);
+        $('#deleteModal #firstName').val(firstName);
+        $('#deleteModal #lastName').val(lastName);
+        $('#deleteModal #age').val(age);
+        $('#deleteModal #login').val(login);
+        $('#deleteModal #roles').empty();
+        $.each(roles, function (key, value) {
+            $('#deleteModal #roles').append('<option value="' + key + '">' + value + '</option>');
+        });
+    }
+
+ </script>
+
+<script>
+/*    let a = document.getElementById("add_user");
+    a.onclick = function () {
+        fetch(`/add_user`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // отправляемые данные
+            },
+            body: JSON.stringify({
+                id: document.getElementById("id").value,
+                firstName: document.getElementById("firstName").value,
+                lastName: document.getElementById("lastName").value,
+                age: document.getElementById("age").value,
+                email: document.getElementById("email").value,
+                role: document.getElementsByClassName("custom-select").value
+            })
+        })
+    }*/
+    function send_user() {
+        $.ajax({
+            url: `/add_user`,
+            dataType: `json`,
+            type: `POST`,
+            cache: `false`,
+            contentType: `application/json`,
+            data: JSON.stringify({
+                id: $("#id").val(),
+                firstName: $("#firstName").val(),
+                lastName: $("#lastName").val(),
+                age: $("#age").val(),
+                login: $("#email").val(),
+                password: $("#password").val(),
+                roles: $("#role").val()
+            }),
+            success: function () {
+                show_users();
+            }
+        })
+    }
 </script>
 <!-- Последняя компиляция и сжатый CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
