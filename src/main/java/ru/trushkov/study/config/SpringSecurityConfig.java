@@ -46,7 +46,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**", "/user/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasRole("USER")
-                .antMatchers("/**", "/registration").permitAll()
+                .antMatchers("/static/**", "/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -62,6 +62,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure( WebSecurity web ) throws Exception {
-        web.ignoring().antMatchers("/static/**","/templates/fragments/**");
+        web.ignoring().antMatchers("/static/js/");
     }
 }

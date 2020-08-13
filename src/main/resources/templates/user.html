@@ -88,52 +88,9 @@
             </div>
         </div>
     </div>
-
-
-    <script>
-        `use strict`
-        let str = "";
-        fetch("/user_data").then(
-            res => {
-                res.json().then(
-                    data => {
-                        let role = "";
-                        $.each(data.roles, function (index, value) {
-                            role += value.name + " ";
-                        })
-                        str = `<strong>${data.login}</strong> with roles: ${role}`;
-                        document.getElementById("head").innerHTML = str;
-                    })
-            })
-    </script>
-
-    <script>
-        `use strict`
-        fetch("/user_data").then(
-            res => {
-                res.json().then(
-                    data => {
-                        let role = "";
-                        $.each(data.roles, function (index, value) {
-                            role += value.name + " ";
-                        })
-                        console.log(data);
-                        let table = `<tr><td>${data.id}</td>
-                                     <td>${data.firstName}</td>
-                                     <td>${data.lastName}</td>
-                                     <td>${data.age}</td>
-                                     <td>${data.login}</td>
-                                     <td>${role}</td>
-                                 </tr>`
-                        document.getElementById("data").innerHTML = table;
-                    }
-                )
-            }
-        )
-    </script>
 </div>
 
-<!--<script src="../static/js/index.js"></script>-->
+<script src="../static/js/user.js"></script>
 <!-- Последняя компиляция и сжатый CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
       integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -148,22 +105,4 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
-<!--
-<script>
-    fetch("/user").then(
-        res=>{
-            res.json().then(
-                data=>{
-                    console.log(data);
-                    if (data.length > 0){
-                        let temp = "";
-                        data.forEach((u)=>{
-                                temp += "<tr>"
-                            }
-                        )
-                    }
-                }
-            )
-        }
-    )
-</script>-->
+

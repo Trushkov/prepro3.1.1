@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.trushkov.study.model.Role;
 import ru.trushkov.study.model.User;
+import ru.trushkov.study.repository.RoleRepository;
 import ru.trushkov.study.service.RoleServiceImpl;
 import ru.trushkov.study.service.UserService;
 
@@ -40,7 +41,7 @@ public class MainController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/admin/users_data", "/registration"})
+    @GetMapping(value = {"/admin/users_data"/*, "/registration"*/})
     public ResponseEntity<List<User>> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
@@ -58,11 +59,12 @@ public class MainController {
     @PostMapping(value = "/add_user")
     public ResponseEntity<?> addUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        for (Role role : user.getRoles()
+        Set<Role> roleSet = user.getRoles();
+        for (Role role: roleSet
         ) {
             roleService.save(role);
         }
+        //user.setRoles(roleSet);
         if (user.getId() == 0) {
             userService.addUser(user);
         } else {
@@ -71,6 +73,11 @@ public class MainController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @DeleteMapping(value = "/admin/delete/{id}")
+    public ResponseEntity<?> removeUser(@PathVariable (name = "id") long id) {
+        userService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     /*@GetMapping(value = "/admin/admin-user")
     public String getAdminUserInfo(Model model){
@@ -131,11 +138,7 @@ public class MainController {
         return "redirect:/admin";
     }
 
-    @RequestMapping(value = "/admin/delete", method = {RequestMethod.POST, RequestMethod.GET})
-    public String removeUser(@RequestParam("id") long id) {
-        userService.remove(id);
-        return "redirect:/admin";
-    }
+
 
     @RequestMapping(value = "/admin/edit-user", method = {RequestMethod.POST, RequestMethod.GET})
     public String edit(@RequestParam("id") long id, Model model) {
